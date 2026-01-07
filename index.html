@@ -40,19 +40,36 @@
   <button id="tapBtn">TAP</button>
 
   <script>
-    let points = 0;
+  const tg = window.Telegram.WebApp;
+  tg.ready();
 
-    const scoreDiv = document.getElementById("score");
-    const tapBtn = document.getElementById("tapBtn");
+  const user = tg.initDataUnsafe.user;
 
-    tapBtn.onclick = () => {
-      points++;
-      scoreDiv.innerText = "Points: " + points;
-    };
+  let userId = user ? user.id : null;
+  let username = user ? user.username : "Guest";
 
-    // تهيئة WebApp
-    Telegram.WebApp.ready();
-  </script>
+  let points = 0;
+
+  const scoreDiv = document.getElementById("score");
+  const tapBtn = document.getElementById("tapBtn");
+
+  if (userId) {
+    console.log("User ID:", userId);
+    console.log("Username:", username);
+  }
+
+  tapBtn.onclick = () => {
+  points++;
+  scoreDiv.innerText = "Points: " + points;
+
+  tg.sendData(JSON.stringify({
+    user_id: userId,
+    points: points
+  }));
+};
+
+</script>
+
 
 </body>
 </html>
