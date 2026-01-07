@@ -44,33 +44,34 @@
   tg.ready();
 
   const user = tg.initDataUnsafe.user;
-
   let userId = user ? user.id : null;
   let points = 0;
 
   const scoreDiv = document.getElementById("score");
   const tapBtn = document.getElementById("tapBtn");
 
-  // تفعيل زر تيليجرام الرسمي
+  // إعداد زر تيليجرام الرسمي
   tg.MainButton.setText("📤 إرسال النقاط");
   tg.MainButton.show();
+  tg.MainButton.enable(); // 🔥 مهم جدًا
 
   tapBtn.onclick = () => {
     points++;
     scoreDiv.innerText = "Points: " + points;
   };
 
-  // عند الضغط على زر تيليجرام
   tg.MainButton.onClick(() => {
-  tg.sendData(JSON.stringify({
-    user_id: userId,
-    points: points
-  }));
+    console.log("MainButton clicked");
 
-  tg.close(); // 👈 هذا هو السطر السحري
-});
+    tg.sendData(JSON.stringify({
+      user_id: userId,
+      points: points
+    }));
 
+    tg.close(); // 👈 الآن سيغلق الصفحة فعليًا
+  });
 </script>
+
 
 
 
