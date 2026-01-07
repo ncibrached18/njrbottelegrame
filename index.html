@@ -62,11 +62,14 @@
 
   // عند الضغط على زر تيليجرام
   tg.MainButton.onClick(() => {
-    tg.sendData(JSON.stringify({
-      user_id: userId,
-      points: points
-    }));
-  });
+  tg.sendData(JSON.stringify({
+    user_id: userId,
+    points: points
+  }));
+
+  tg.close(); // 👈 هذا هو السطر السحري
+});
+
 </script>
 
 
