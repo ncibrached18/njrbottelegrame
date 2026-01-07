@@ -39,36 +39,36 @@
 
   <button id="tapBtn">TAP</button>
 
-  <script>
+<script>
   const tg = window.Telegram.WebApp;
   tg.ready();
 
   const user = tg.initDataUnsafe.user;
 
   let userId = user ? user.id : null;
-  let username = user ? user.username : "Guest";
-
   let points = 0;
 
   const scoreDiv = document.getElementById("score");
   const tapBtn = document.getElementById("tapBtn");
 
-  if (userId) {
-    console.log("User ID:", userId);
-    console.log("Username:", username);
-  }
+  // تفعيل زر تيليجرام الرسمي
+  tg.MainButton.setText("📤 إرسال النقاط");
+  tg.MainButton.show();
 
   tapBtn.onclick = () => {
-  points++;
-  scoreDiv.innerText = "Points: " + points;
+    points++;
+    scoreDiv.innerText = "Points: " + points;
+  };
 
-  tg.sendData(JSON.stringify({
-    user_id: userId,
-    points: points
-  }));
-};
-
+  // عند الضغط على زر تيليجرام
+  tg.MainButton.onClick(() => {
+    tg.sendData(JSON.stringify({
+      user_id: userId,
+      points: points
+    }));
+  });
 </script>
+
 
 
 </body>
