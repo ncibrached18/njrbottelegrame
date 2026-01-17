@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Tap Game</title>
-
-  <!-- Telegram Web App SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
@@ -15,65 +13,43 @@
       text-align: center;
       padding-top: 60px;
     }
-
     #tapBtn {
       width: 200px;
       height: 200px;
       border-radius: 50%;
       font-size: 28px;
-      border: none;
       background: gold;
-      cursor: pointer;
-    }
-
-    #score {
-      font-size: 30px;
-      margin-bottom: 20px;
+      border: none;
     }
   </style>
 </head>
 
 <body>
 
-  <div id="score">Points: 0</div>
-
-  <button id="tapBtn">TAP</button>
+<h1 id="score">Points: 0</h1>
+<button id="tapBtn">TAP</button>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.ready();
 
-  const user = tg.initDataUnsafe.user;
-  let userId = user ? user.id : null;
   let points = 0;
 
-  const scoreDiv = document.getElementById("score");
-  const tapBtn = document.getElementById("tapBtn");
-
-  // إعداد زر تيليجرام الرسمي
-  tg.MainButton.setText("📤 إرسال النقاط");
-  tg.MainButton.show();
-  tg.MainButton.enable(); // 🔥 مهم جدًا
-
-  tapBtn.onclick = () => {
+  document.getElementById("tapBtn").onclick = () => {
     points++;
-    scoreDiv.innerText = "Points: " + points;
+    document.getElementById("score").innerText = "Points: " + points;
   };
 
-  tg.MainButton.onClick(() => {
-    console.log("MainButton clicked");
+  tg.MainButton.setText("📤 إرسال النقاط");
+  tg.MainButton.show();
 
+  tg.MainButton.onClick(() => {
     tg.sendData(JSON.stringify({
-      user_id: userId,
       points: points
     }));
-
-    tg.close(); // 👈 الآن سيغلق الصفحة فعليًا
+    tg.close();
   });
 </script>
-
-
-
 
 </body>
 </html>
